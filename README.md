@@ -1,90 +1,171 @@
-# 🛡️ SQLScan
+<div align="center">
+
+# SQLScan
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**SQLScan** adalah alat pemindai kerentanan SQL Injection otomatis yang ringan dan cepat. Alat ini mendukung berbagai metode deteksi, mulai dari *error-based* hingga *blind time-based*, serta mampu memproses file request dari Burp Suite secara langsung.
+**SQLScan** is a Python-based **SQL Injection scanner** focused on *parameter testing* using response comparison techniques.
+
+Lightweight, fast, and designed for **authorized security testing only**.
+
+</div>
 
 ---
 
-## ✨ Fitur Utama
+## Overview
 
-* **🎯 Target Fleksibel**: Scan satu URL, daftar URL dalam file, atau file HTTP request mentah.
-* **🔍 Mode Deteksi Lengkap**:
-    * **Error-Based**: Mendeteksi kesalahan sintaks database.
-    * **Time-Based**: Menggunakan teknik *sleep* untuk konfirmasi celah.
-    * **Union-Based**: (Aggressive) Mendeteksi melalui manipulasi query UNION.
-    * **Potential Blind**: Analisis perbedaan panjang respon (Content-Length).
-* **🧩 Header Scanning**: Injeksi pada header `User-Agent`, `Referer`, `Cookie`, dan lainnya.
-* **⚡ Multi-threading**: Pemindaian cepat dengan 10 thread paralel.
-* **📊 Output Terorganisir**: Hasil disimpan otomatis dalam format `.log` dan `.json`.
+<img src="assets/overview.png" width="700">
+
+SQLScan supports scanning:
+- GET & POST parameters
+- Common HTTP headers
+- Raw HTTP request files (Burp Suite format)
 
 ---
 
-## ⚙️ Instalasi
+## Features
 
-1. Clone repository ini:
-   ```bash
-   git clone [https://github.com/username/sqlscan.git](https://github.com/username/sqlscan.git)
-   cd sqlscan
+- **Error-Based SQL Injection**
+  - Detection based on database error patterns (MySQL, PostgreSQL, MSSQL)
 
+- **Time-Based SQL Injection**
+  - Uses `SLEEP()` payloads and response time delta analysis
 
-Instal dependensi:
-Bash
+- **Union-Based SQL Injection**
+  - Available in `--aggressive` mode
+  - Detects response hash differences
 
-    pip install -r requirements.txt
+- **Potential Blind SQL Injection**
+  - Content-length difference heuristic
 
-🚀 Cara Penggunaan
-Sintaks Dasar
-Bash
+- **Header Injection Testing**
+  - User-Agent
+  - Referer
+  - Cookie
+  - Origin
+  - X-Forwarded-For
+  - X-Requested-With
 
+- **Multi-threaded Scanning**
+  - Up to 10 parallel threads (for multiple targets)
+
+- **Structured Output**
+  - Plain text log (`results/sqlscan.log`)
+  - JSON report (`results/sqlscan_results.json`)
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/pangeran-droid/sqlscan.git
+cd sqlscan
+pip install -r requirements.txt
+```
+
+---
+
+## Usage
+
+### Basic Syntax
+```bash
 python3 sqlscan.py [options] <target>
+```
 
-Opsi Argumen
-Flag	Long Flag	Deskripsi
--h	--help	Menampilkan bantuan
--b	--burp	Scan file request mentah (Burp Suite format)
--t	--time	Aktifkan deteksi Time-based SQLi
--H	--scan-headers	Scan parameter di dalam HTTP Headers
--a	--aggressive	Aktifkan pengecekan agresif (UNION & Blind)
-📄 Contoh Perintah
+### Supported Targets
+- Single URL
+- File containing multiple URLs
+- Raw HTTP request file (Burp Suite)
 
-Scan URL tunggal dengan deteksi waktu:
-Bash
+---
 
-python3 sqlscan.py "[http://example.com/search.php?id=1](http://example.com/search.php?id=1)" -t
+## Command-Line Options
 
-Scan masal dari file targets.txt:
-Bash
+| Flag | Long Flag        | Description                              |
+| ---- | ---------------- | ---------------------------------------- |
+| `-h` | `--help`         | Show help message                        |
+| `-t` | `--time`         | Enable time-based SQLi detection         |
+| `-H` | `--scan-headers` | Scan SQLi in HTTP headers                |
+| `-a` | `--aggressive`   | Enable UNION & blind heuristics          |
+| `-b` | `--burp`         | Scan raw HTTP request file (Burp format) |
 
+---
+
+## Examples
+
+### Scan a single URL
+```bash
+python3 sqlscan.py "http://example.com/page.php?id=1"
+```
+
+### Scan with time-based SQLi + headers
+```bash
+python3 sqlscan.py "http://example.com/page.php?id=1" -t -H
+```
+
+### Scan multiple targets from file
+```bash
 python3 sqlscan.py targets.txt -a
+```
 
-Scan dari file request Burp Suite (Full Scan):
-Bash
-
+### Scan a Burp Suite request file
+```bash
 python3 sqlscan.py -b request.txt -t -H -a
+```
 
-💾 Hasil Output (Results)
+---
 
-Setiap hasil pemindaian akan disimpan di folder results/:
+## Output
 
-    results/sqlscan.log: Log teks yang mencatat aktivitas pemindaian.
+All scan results are automatically saved in the `results/` directory:
 
-    results/sqlscan_results.json: Hasil temuan dalam format JSON untuk analisis data.
+- `sqlscan.log`  
+  Scan activity log
 
-📂 Struktur Project
-Plaintext
+- `sqlscan_results.json`  
+Detailed findings (parameter, method, payload, type)
 
+---
+
+## Detection Methodology (Brief)
+
+- Baseline response comparison
+- Content normalization (timestamps, hashes, whitespace)
+- Analysis based on:
+  - Error messages
+  - MD5 hash differences
+  - Response time deltas
+  - Content-length differences
+
+---
+
+## Project Structure
+
+```text
 sqlscan/
-├── sqlscan.py          # Script utama
-├── requirements.txt    # Daftar dependensi
-├── results/            # Folder output (otomatis dibuat)
+├── sqlscan.py
+├── requirements.txt
+├── results/
 │   ├── sqlscan.log
 │   └── sqlscan_results.json
-└── README.md           # Dokumentasi ini
+└── README.md
+```
 
-⚠️ Disclaimer
+---
 
-Penggunaan SQLScan untuk menyerang target tanpa izin tertulis sebelumnya adalah ilegal. Penulis tidak bertanggung jawab atas kerusakan atau penyalahgunaan yang disebabkan oleh program ini. Gunakan hanya untuk tujuan edukasi dan pengujian keamanan yang legal.
+## Disclaimer
 
-MIT License © 2024 YourName
+This tool is**not intended for illegal exploitation**.
+
+Use **SQLScan** only on:
+- Systems you own
+- Systems you have explicit written permission to test
+
+The author is not responsible for any misuse or damage caused by this tool.
+
+---
+
+## Lisensi
+
+MIT License © 2026 Pangeran

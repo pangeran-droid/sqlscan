@@ -329,7 +329,7 @@ if __name__ == "__main__":
     logo = r"""
                __                    
    _________ _/ /_____________ _____ 
-  / ___/ __ `/ / ___/ ___/ __ `/ __ \
+  / ___/ __ `/ / ___/ ___/ __ `/ __ \ 1.0
  (__  ) /_/ / (__  ) /__/ /_/ / / / /
 /____/\__, /_/____/\___/\__,_/_/ /_/ 
 |-------/_/=======]--------------->
@@ -354,14 +354,23 @@ if __name__ == "__main__":
         print("  -t, --time                   Enable time-based SQLi detection")
         print("  -H, --scan-headers           Scan HTTP headers")
         print("  -a, --aggressive             Enable aggressive checks (UNION / blind)")
+        print("  -v, --version                Show program version")
         print()
 
         print(f"{bcolors.WARNING}Note:{bcolors.ENDC} Use only on systems you own or have permission to test.")
         sys.exit(exit_code)
 
+    VERSION = "1.0"
+
     # ---- HANDLE HELP ----
     if "-h" in sys.argv or "--help" in sys.argv:
         show_help(0)
+
+    # ---- HANDLE VERSION ----
+    if "-v" in sys.argv or "--version" in sys.argv:
+        print(f"{bcolors.OKCYAN}{logo}{bcolors.ENDC}")
+        print(f"sqlscan version {VERSION}")
+        sys.exit(0)
 
     # ---- FLAGS (SHORT + LONG) ----
     time_based   = "--time" in sys.argv or "-t" in sys.argv
