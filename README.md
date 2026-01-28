@@ -1,4 +1,6 @@
-<div align="center">
+<<div align="center">
+
+<img src="https://raw.githubusercontent.com/username/repo/main/assets/logo.png" alt="SQLScan Logo" width="150">
 
 # SQLScan
 
@@ -6,8 +8,6 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 **SQLScan** is a Python-based **SQL Injection scanner** focused on *parameter testing* using response comparison techniques.
-
-Lightweight, fast, and designed for **authorized security testing only**.
 
 </div>
 
