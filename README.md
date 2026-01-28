@@ -15,7 +15,7 @@ Lightweight, fast, and designed for **authorized security testing only**.
 
 ## Overview
 
-<img src="assets/overview.png" width="700">
+<img src="assets/example.png">
 
 SQLScan supports scanning:
 - GET & POST parameters
