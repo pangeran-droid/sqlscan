@@ -1,0 +1,13 @@
+# SQLScan Results
+results/
+
+# Python environment
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
