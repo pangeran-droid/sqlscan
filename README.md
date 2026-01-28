@@ -9,18 +9,17 @@
 
 **SQLScan** is a Python-based **SQL Injection scanner** focused on *parameter testing* using response comparison techniques.
 
-</div>
-
 ---
 
 ## Overview
 
-<img src="assets/example.png">
+<img src="assets/example.png" width="700">
 
 SQLScan supports scanning:
-- GET & POST parameters
-- Common HTTP headers
-- Raw HTTP request files (Burp Suite format)
+
+GET & POST parameters • Common HTTP headers • Raw HTTP request files (Burp Suite format)
+
+</div>
 
 ---
 
