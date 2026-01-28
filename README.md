@@ -1,6 +1,6 @@
 <div align="center">
-
-<img src="https://raw.githubusercontent.com/pangeran-droid/repo/main/assets/logo.png" alt="SQLScan Logo" width="150">
+  
+<img src="assets/logo.png" alt="SQLScan Logo" width="250">
 
 # SQLScan
 
