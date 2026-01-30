@@ -67,27 +67,38 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Basic Syntax
 ```bash
-python3 sqlscan.py [options] <target>
+               __                                                            
+   _________ _/ /_____________ _____                                         
+  / ___/ __ `/ / ___/ ___/ __ `/ __ \ 1.0                                    
+ (__  ) /_/ / (__  ) /__/ /_/ / / / /                                        
+/____/\__, /_/____/\___/\__,_/_/ /_/                                         
+|-------/_/=======]--------------->                                          
+                                                                             
+                                                                             
+Usage:
+  python3 sqlscan.py [options] <target>
+
+Targets:
+  URL                          Scan single URL
+  targets.txt                  Scan multiple targets from file
+  -b, --burp request.txt       Scan raw HTTP request (Burp format)
+
+Options:
+  -h, --help                   Show this help message
+  -t, --time                   Enable time-based SQLi detection
+  -H, --scan-headers           Scan HTTP headers
+  -a, --aggressive             Enable aggressive checks (UNION / blind)
+  -v, --version                Show program version
+
+Note: Use only on systems you own or have permission to test.
+                                                                             
 ```
 
 ### Supported Targets
 - Single URL
 - File containing multiple URLs
 - Raw HTTP request file (Burp Suite)
-
----
-
-## Command-Line Options
-
-| Flag | Long Flag        | Description                              |
-| ---- | ---------------- | ---------------------------------------- |
-| `-h` | `--help`         | Show help message                        |
-| `-t` | `--time`         | Enable time-based SQLi detection         |
-| `-H` | `--scan-headers` | Scan SQLi in HTTP headers                |
-| `-a` | `--aggressive`   | Enable UNION & blind heuristics          |
-| `-b` | `--burp`         | Scan raw HTTP request file (Burp format) |
 
 ---
 
