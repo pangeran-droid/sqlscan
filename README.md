@@ -1,57 +1,55 @@
 <div align="center">
-  
-<img src="assets/logo.png" alt="SQLScan Logo" width="350">
+
+<img src="assets/logo.png" alt="SQLScan Logo" width="300">
 
 # SQLScan
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-**SQLScan** is a Python-based **SQL Injection scanner** focused on *parameter testing* using response comparison techniques.
+**SQLScan** is a lightweight Python-based **SQL Injection scanner** focused on  
+**GET parameter testing** using classic detection techniques.
+
+</div>
 
 ---
 
 ## Overview
 
-<img src="assets/example.png" width="700">
+SQLScan is designed to quickly identify common SQL Injection vulnerabilities
+in URL parameters with clear, readable terminal output.
 
-SQLScan supports scanning:
-
-GET & POST parameters • Common HTTP headers • Raw HTTP request files (Burp Suite format)
-
-</div>
+Supported detection techniques:
+- Error-Based SQL Injection
+- Boolean-Based SQL Injection
+- Time-Based (Blind) SQL Injection
 
 ---
 
 ## Features
 
 - **Error-Based SQL Injection**
-  - Detection based on database error patterns (MySQL, PostgreSQL, MSSQL)
+  - Detects database error messages
+  - Supported DBs:
+    - MySQL / MariaDB
+    - PostgreSQL
+    - Microsoft SQL Server
+
+- **Boolean-Based SQL Injection**
+  - Compares response length differences (`OR 1=1` vs `OR 1=2`)
 
 - **Time-Based SQL Injection**
-  - Uses `SLEEP()` payloads and response time delta analysis
+  - Uses delay payloads (`SLEEP`, `pg_sleep`, `WAITFOR`)
+  - Double verification (3s & 7s delay)
 
-- **Union-Based SQL Injection**
-  - Available in `--aggressive` mode
-  - Detects response hash differences
+- **Multiple Target Support**
+  - Scan a single URL
+  - Scan multiple targets from a file
 
-- **Potential Blind SQL Injection**
-  - Content-length difference heuristic
-
-- **Header Injection Testing**
-  - User-Agent
-  - Referer
-  - Cookie
-  - Origin
-  - X-Forwarded-For
-  - X-Requested-With
-
-- **Multi-threaded Scanning**
-  - Up to 10 parallel threads (for multiple targets)
-
-- **Structured Output**
-  - Plain text log (`results/sqlscan.log`)
-  - JSON report (`results/sqlscan_results.json`)
+- **Clean Terminal Output**
+  - Colored status indicators
+  - Per‑parameter testing
+  - Per‑target progress display
 
 ---
 
@@ -67,39 +65,24 @@ pip install -r requirements.txt
 
 ## Usage
 
-```bash
-               __                                                            
-   _________ _/ /_____________ _____                                         
-  / ___/ __ `/ / ___/ ___/ __ `/ __ \ 1.0                                    
- (__  ) /_/ / (__  ) /__/ /_/ / / / /                                        
-/____/\__, /_/____/\___/\__,_/_/ /_/                                         
-|-------/_/=======]--------------->                                          
-                                                                             
-                                                                             
-Usage:
-  python3 sqlscan.py [options] <target>
+```text
+               __                    
+   _________ _/ /_____________ _____ 
+  / ___/ __ `/ / ___/ ___/ __ `/ __ \ 1.0
+ (__  ) /_/ / (__  ) /__/ /_/ / / / /
+/____/\__, /_/____/\___/\__,_/_/ /_/ 
+|-------/_/=======]--------------->
 
-Targets:
-  URL                          Scan single URL
-  targets.txt                  Scan multiple targets from file
-  -b, --burp request.txt       Scan raw HTTP request (Burp format)
 
-Options:
-  -h, --help                   Show this help message
-  -t, --time                   Enable time-based SQLi detection
-  -H, --scan-headers           Scan HTTP headers
-  -a, --aggressive             Enable aggressive checks (UNION / blind)
-  -v, --version                Show program version
+usage: python3 test.py [options]
 
-Note: Use only on systems you own or have permission to test.
-                                                                             
+options:
+  -h, --help       show this help message and exit
+  -u, --url URL    Target URL (example: http://site.com/page.php?id=1)
+  -l, --list LIST  Scan multiple targets from file (example: targets.txt)
+  -v, --version    Show program version
+                                            
 ```
-
-### Supported Targets
-- Single URL
-- File containing multiple URLs
-- Raw HTTP request file (Burp Suite)
-
 ---
 
 ## Examples
@@ -115,8 +98,15 @@ python3 sqlscan.py "http://example.com/page.php?id=1" -t -H
 ```
 
 ### Scan multiple targets from file
+target.txt
+```text
+http://site1.com/item.php?id=1
+http://site2.com/view.php?id=5
+http://site3.com/page.php?cat=2
+```
+
 ```bash
-python3 sqlscan.py targets.txt -a
+python3 sqlscan.py -l targets.txt
 ```
 
 ### Scan a Burp Suite request file
@@ -126,27 +116,20 @@ python3 sqlscan.py -b request.txt -t -H -a
 
 ---
 
-## Output
+## Output example
 
-All scan results are automatically saved in the `results/` directory:
+```bash
+TARGET 1/3] http://testphp.vulnweb.com/listproducts.php?cat=1
 
-- `sqlscan.log`  
-  Scan activity log
+[START] Target: http://testphp.vulnweb.com/listproducts.php
+[INFO] Parameters found: cat
 
-- `sqlscan_results.json`  
-Detailed findings (parameter, method, payload, type)
+============================================================
+[TEST] Parameter: cat
+============================================================
+  [VULN] MySQL Error-Based SQL Injection detected!
 
----
-
-## Detection Methodology (Brief)
-
-- Baseline response comparison
-- Content normalization (timestamps, hashes, whitespace)
-- Analysis based on:
-  - Error messages
-  - MD5 hash differences
-  - Response time deltas
-  - Content-length differences
+```
 
 ---
 
@@ -156,9 +139,8 @@ Detailed findings (parameter, method, payload, type)
 sqlscan/
 ├── sqlscan.py
 ├── requirements.txt
-├── results/
-│   ├── sqlscan.log
-│   └── sqlscan_results.json
+├── assets/
+│   └── logo.png
 └── README.md
 ```
 
@@ -166,11 +148,9 @@ sqlscan/
 
 ## Disclaimer
 
-This tool is**not intended for illegal exploitation**.
+This tool is **for educational and authorized security testing only**.
 
-Use **SQLScan** only on:
-- Systems you own
-- Systems you have explicit written permission to test
+Use SQLScan **only on systems you own or have explicit permission to test**.
 
 The author is not responsible for any misuse or damage caused by this tool.
 
