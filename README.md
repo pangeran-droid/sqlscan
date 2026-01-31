@@ -74,7 +74,7 @@ pip install -r requirements.txt
 |-------/_/=======]--------------->
 
 
-usage: python3 test.py [options]
+usage: python3 sqlscan.py [options]
 
 options:
   -h, --help       show this help message and exit
