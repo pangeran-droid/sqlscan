@@ -1,6 +1,3 @@
-# SQLScan Results
-results/
-
 # Python environment
 __pycache__/
 *.py[cod]
