@@ -105,18 +105,13 @@ http://site3.com/page.php?cat=2
 python3 sqlscan.py -l targets.txt
 ```
 
-### Scan a Burp Suite request file
-```bash
-python3 sqlscan.py -b request.txt -t -H -a
-```
-
 ---
 
 ## Output example
 
-```bash
+```text
 [START] Target: http://site1.com/item.php
-[INFO] Parameters found: cat
+[INFO] Parameters found: id
 
 ============================================================
 [TEST] Parameter: id
@@ -127,9 +122,6 @@ python3 sqlscan.py -b request.txt -t -H -a
       [OK] Delay 3s confirmed
       [OK] Delay 7s confirmed
   [VULN] MySQL Time-Based SQL Injection CONFIRMED
-
-
-
 ```
 
 ---
