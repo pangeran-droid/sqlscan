@@ -110,6 +110,8 @@ python3 sqlscan.py -l targets.txt
 ## Output example
 
 ```text
+[TARGET 1/1] http://site1.com/item.php?id=1
+
 [START] Target: http://site1.com/item.php
 [INFO] Parameters found: id
 
@@ -122,6 +124,8 @@ python3 sqlscan.py -l targets.txt
       [OK] Delay 3s confirmed
       [OK] Delay 7s confirmed
   [VULN] MySQL Time-Based SQL Injection CONFIRMED
+
+[DONE] Scan finished
 ```
 
 ---
