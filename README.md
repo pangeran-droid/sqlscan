@@ -6,6 +6,7 @@
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Security](https://img.shields.io/badge/focus-web--security-red)
 
 **SQLScan** is a lightweight Python-based **SQL Injection scanner** focused on  
 **GET parameter testing** using classic detection techniques.
