@@ -93,11 +93,6 @@ options:
 python3 sqlscan.py "http://example.com/page.php?id=1"
 ```
 
-### Scan with time-based SQLi + headers
-```bash
-python3 sqlscan.py "http://example.com/page.php?id=1" -t -H
-```
-
 ### Scan multiple targets from file
 target.txt
 ```text
@@ -120,15 +115,20 @@ python3 sqlscan.py -b request.txt -t -H -a
 ## Output example
 
 ```bash
-TARGET 1/3] http://testphp.vulnweb.com/listproducts.php?cat=1
-
-[START] Target: http://testphp.vulnweb.com/listproducts.php
+[START] Target: http://site1.com/item.php
 [INFO] Parameters found: cat
 
 ============================================================
-[TEST] Parameter: cat
+[TEST] Parameter: id
 ============================================================
   [VULN] MySQL Error-Based SQL Injection detected!
+  [INFO] Boolean-Based indication detected
+      [INFO] Verifying MySQL Time-Based (double check)
+      [OK] Delay 3s confirmed
+      [OK] Delay 7s confirmed
+  [VULN] MySQL Time-Based SQL Injection CONFIRMED
+
+
 
 ```
 
