@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" alt="SQLScan Logo" width="300">
+<img src="assets/logo.jpg" alt="SQLScan Logo" width="300">
 
 # SQLScan
 
