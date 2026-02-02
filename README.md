@@ -1,12 +1,13 @@
 <div align="center">
-
+  
 <img src="assets/logo.jpg" alt="SQLScan Logo" width="300">
 
 # SQLScan
 
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Security](https://img.shields.io/badge/focus-web--security-red)
+[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Security](https://img.shields.io/badge/Focus-Web--Security-red?style=for-the-badge)](https://en.wikipedia.org/wiki/Web_application_security)
+[![Stars](https://img.shields.io/github/stars/pangeran-droid/sqlscan?style=for-the-badge&color=yellow)](https://github.com/pangeran-droid/sqlscan/stargazers)
 
 **SQLScan** is a lightweight Python-based **SQL Injection scanner** focused on  
 **GET parameter testing** using classic detection techniques.
